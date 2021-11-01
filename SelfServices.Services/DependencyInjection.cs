@@ -14,6 +14,7 @@ namespace SelfServices.Services
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IEssUserService, EssUserService>();
             services.AddRepositry(configuration);
             return services;
         }

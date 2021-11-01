@@ -20,6 +20,7 @@ namespace SelfServices.Repositry
 
             services.AddScoped<IDapper, Dapper>();
             services.AddScoped<ICompanyRepositry, CompanyRepositry>();
+            services.AddScoped<IEssUserRepositry, EssUserRepositry>();
 
             return services;
         }
