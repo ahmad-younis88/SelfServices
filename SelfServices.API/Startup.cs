@@ -76,7 +76,8 @@ namespace SelfServices.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMiddleware<SelfServicesMiddleWare>();
+            // Commit by ahmad younis to understand middleware on dipe
+            //app.UseMiddleware<SelfServicesMiddleWare>(); 
 
             app.UseDirectoryBrowser();
 
