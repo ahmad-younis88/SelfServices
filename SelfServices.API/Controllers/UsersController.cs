@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SelfServices.API.Controllers
 {
-    [Route("api/company")]
+    [Route("api/user")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -45,7 +45,7 @@ namespace SelfServices.API.Controllers
                 #endregion
 
                 string jwtToken = TokenServices.GenerateToken(userInfo);
-                return Ok(new { isSuccess = true, Message = "", token = jwtToken });
+                return Ok(new { isSuccess = true, Message = "", token = jwtToken , data = essUser });
             }
             catch (Exception ex)
             {
