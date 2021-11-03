@@ -9,6 +9,7 @@ namespace SelfServices.Common.Interface.Repositry
 {
     public interface IEmployeeRepositry
     {
-        Task<EmployeeViewDto> GetEmployee(EmployeeDto employeeDto);
+        Task<EmployeeViewDto> GetEmployee(EmployeeFilterDto employeeDto);
+        Task<EmployeeSalaryReportViewDto> GetEmployeeSalary(EmployeeSalaryFilterDto employeeSalaryFilter);
     }
 }

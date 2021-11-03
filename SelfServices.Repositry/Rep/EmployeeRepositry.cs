@@ -17,6 +17,7 @@ namespace SelfServices.Repositry.Rep
         #region :: Procedure Name 
 
         private const string _Get_Employee_By_Id = "GET_EMPLOYEES_BY_ID";
+        private const string _Get_Employee_Salary_By_Emp_Id = "GET_EMPLOYEES_SALARY_BY_EMP_ID";
 
         #endregion
 
@@ -24,6 +25,8 @@ namespace SelfServices.Repositry.Rep
 
         private const string CompanyId = "@CompanyID";
         private const string EmployeeId = "@EmployeeID";
+        private const string MonthID = "@MonthID";
+        private const string YearID = "@YearID";
 
         #endregion
 
@@ -33,13 +36,24 @@ namespace SelfServices.Repositry.Rep
             Dapper = dapper;
         }
 
-        public async Task<EmployeeViewDto> GetEmployee(EmployeeDto employeeDto)
+        public async Task<EmployeeViewDto> GetEmployee(EmployeeFilterDto employeeDto)
         {
             var dbparams = new DynamicParameters();
             dbparams.Add(CompanyId, employeeDto.CompanyId, DbType.Int32, ParameterDirection.Input);
             dbparams.Add(EmployeeId, employeeDto.EmployeeId, DbType.String, ParameterDirection.Input);
             EmployeeViewDto employee = await Dapper.Get<EmployeeViewDto>(_Get_Employee_By_Id, dbparams, commandType: CommandType.StoredProcedure);
             return employee;
+        }
+
+        public async Task<EmployeeSalaryReportViewDto> GetEmployeeSalary(EmployeeSalaryFilterDto employeeSalaryFilter)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(CompanyId, employeeSalaryFilter.CompanyId, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, employeeSalaryFilter.EmployeeId, DbType.String, ParameterDirection.Input);
+            dbparams.Add(MonthID, employeeSalaryFilter.MonthId, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(YearID, employeeSalaryFilter.YearId, DbType.Int32, ParameterDirection.Input);
+            EmployeeSalaryReportViewDto employeeSalary = await Dapper.Get<EmployeeSalaryReportViewDto>(_Get_Employee_Salary_By_Emp_Id, dbparams, commandType: CommandType.StoredProcedure);
+            return employeeSalary;
         }
     }
 }

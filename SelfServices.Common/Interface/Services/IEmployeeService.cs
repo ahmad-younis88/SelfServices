@@ -9,6 +9,7 @@ namespace SelfServices.Common.Interface.Services
 {
     public interface IEmployeeService
     {
-        Task<EmployeeViewDto> GetEmployee(EmployeeDto employeeDto);
+        Task<EmployeeViewDto> GetEmployee(EmployeeFilterDto employeeDto);
+        Task<EmployeeSalaryReportViewDto> GetEmployeeSalary(EmployeeSalaryFilterDto employeeSalaryFilter);
     }
 }

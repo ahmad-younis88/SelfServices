@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SelfServices.API.Controllers
 {
-    [Route("api/emplyoee")]
+    [Route("api/employee")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -30,12 +30,29 @@ namespace SelfServices.API.Controllers
         [Route("GetbyId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetEmployeeById([FromBody] EmployeeDto employeeDto)
+        public async Task<IActionResult> GetEmployeeById([FromBody] EmployeeFilterDto employeeDto)
         {
             try
             {
                 EmployeeViewDto employee = await EmployeeService.GetEmployee(employeeDto);
                 return Ok(new { isSuccess = true, Message = "", data = employee });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("EmpSalary/GetbyId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetEmployeeSalary([FromBody] EmployeeSalaryFilterDto employeeSalaryFilterDto)
+        {
+            try
+            {
+                EmployeeSalaryReportViewDto employeeSalary = await EmployeeService.GetEmployeeSalary(employeeSalaryFilterDto);
+                return Ok(new { isSuccess = true, Message = "", data = employeeSalary });
             }
             catch (Exception ex)
             {

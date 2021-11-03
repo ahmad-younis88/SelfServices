@@ -17,10 +17,16 @@ namespace SelfServices.Services.Service
             EmployeeRepositry = employeeRepositry;
         }
 
-        public async Task<EmployeeViewDto> GetEmployee(EmployeeDto employeeDto)
+        public async Task<EmployeeViewDto> GetEmployee(EmployeeFilterDto employeeDto)
         {
             EmployeeViewDto employeeViewDto = await EmployeeRepositry.GetEmployee(employeeDto);
             return employeeViewDto;
+        }
+
+        public async Task<EmployeeSalaryReportViewDto> GetEmployeeSalary(EmployeeSalaryFilterDto employeeSalaryFilter)
+        {
+            EmployeeSalaryReportViewDto employeeSalaryViewDto = await EmployeeRepositry.GetEmployeeSalary(employeeSalaryFilter);
+            return employeeSalaryViewDto;
         }
     }
 }
