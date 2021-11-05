@@ -40,5 +40,23 @@ namespace SelfServices.Services.Service
             List<LeaveType> leaveTypes = await EmployeeRepositry.GetLeaveRequestType(employeeDto);
             return leaveTypes;
         }
+
+        public async Task<int> AddEmployeeVacationRequest(VacationRequestDto vacationRequestDto)
+        {
+            return await EmployeeRepositry.AddEmployeeVacationRequest(vacationRequestDto);
+        }
+        public async Task<int> AddEmployeeLeaveRequest(LeaveRequestDto leaveRequestDto)
+        {
+            return await EmployeeRepositry.AddEmployeeLeaveRequest(leaveRequestDto);
+        }
+        public async Task<int> UpdateVacactionRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            return await EmployeeRepositry.UpdateVacactionRequestStatus(requestUpdateStatusDto);
+        }
+        public async  Task<int> UpdateLeaveRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            return await EmployeeRepositry.UpdateLeaveRequestStatus(requestUpdateStatusDto);
+        }
+
     }
 }

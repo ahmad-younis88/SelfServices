@@ -20,6 +20,10 @@ namespace SelfServices.Repositry.Rep
         private const string _Get_Employee_Salary_By_Emp_Id = "GET_EMPLOYEES_SALARY_BY_EMP_ID";
         private const string _Get_Employees_Balances_By_Emp_Id = "GET_EMPLOYEES_BALANCES_BY_EMP_ID";
         private const string _Get_Employees_Leave_Type = "GET_EMPLOYEES_LEAVE_TYPE";
+        private const string _Add_Employee_Vacation_Request = "ADD_EMPLOYEE_VACATION_REQUEST";
+        private const string _Add_Employee_Leave_Request = "ADD_EMPLOYEE_LEAVE_REQUEST";
+        private const string _Update_Employee_Vacation_Request_Status = "UPDATE_EMPLOYEE_VACATION_REQUEST_STATUS";
+        private const string _Update_Employee_Leave_Request_Status = "UPDATE_EMPLOYEE_LEAVE_REQUEST_STATUS";
 
         #endregion
 
@@ -29,6 +33,18 @@ namespace SelfServices.Repositry.Rep
         private const string EmployeeId = "@EmployeeID";
         private const string MonthID = "@MonthID";
         private const string YearID = "@YearID";
+        private const string RequestNo = "@@RequestNo";
+        private const string RequestStatus = "@RequestStatus";
+        private const string VacationTypeID = "@VacationTypeID";
+        private const string LeaveTypeID = "@LeaveTypeID";
+        private const string RequestDate = "@RequestDate";
+        private const string FromDate = "@FromDate";
+        private const string ToDate = "@ToDate";
+        private const string FromTime = "@FromTime";
+        private const string ToTime = "@ToTime";
+        private const string Note = "@Note";
+
+
 
         #endregion
 
@@ -74,6 +90,54 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(EmployeeId, employeeDto.EmployeeId, DbType.String, ParameterDirection.Input);
             List<LeaveType> leaveTypes = await Dapper.GetAll<LeaveType>(_Get_Employees_Leave_Type, dbparams, commandType: CommandType.StoredProcedure);
             return leaveTypes;
+        }
+
+
+        public async Task<int> AddEmployeeVacationRequest(VacationRequestDto vacationRequestDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(CompanyId, vacationRequestDto.CompanyID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, vacationRequestDto.EmployeeID, DbType.String, ParameterDirection.Input);
+            dbparams.Add(VacationTypeID, vacationRequestDto.VacationTypeID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(RequestDate, vacationRequestDto.RequestDate, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(FromDate, vacationRequestDto.FromDate, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(ToDate, vacationRequestDto.ToDate, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(Note, vacationRequestDto.Note, DbType.String, ParameterDirection.Input);
+            int nResult = await Dapper.Insert(_Add_Employee_Vacation_Request, dbparams, commandType: CommandType.StoredProcedure);
+            return nResult;
+        }
+        public async Task<int> AddEmployeeLeaveRequest(LeaveRequestDto leaveRequestDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(CompanyId, leaveRequestDto.CompanyID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, leaveRequestDto.EmployeeID, DbType.String, ParameterDirection.Input);
+            dbparams.Add(LeaveTypeID, leaveRequestDto.LeaveTypeID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(RequestDate, leaveRequestDto.RequestDate, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(FromTime, leaveRequestDto.FromTime, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(ToTime, leaveRequestDto.ToTime, DbType.DateTime, ParameterDirection.Input);
+            dbparams.Add(Note, leaveRequestDto.Note, DbType.String, ParameterDirection.Input);
+            int nResult = await Dapper.Insert(_Add_Employee_Leave_Request, dbparams, commandType: CommandType.StoredProcedure);
+            return nResult;
+        }
+        public async Task<int> UpdateVacactionRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(RequestNo, requestUpdateStatusDto.RequestNo, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(CompanyId, requestUpdateStatusDto.CompanyID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, requestUpdateStatusDto.EmployeeID, DbType.String, ParameterDirection.Input);
+            dbparams.Add(RequestStatus, requestUpdateStatusDto.RequestStatus, DbType.DateTime, ParameterDirection.Input);
+            int nResult = await Dapper.Update(_Update_Employee_Vacation_Request_Status, dbparams, commandType: CommandType.StoredProcedure);
+            return nResult;
+        }
+        public async Task<int> UpdateLeaveRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(RequestNo, requestUpdateStatusDto.RequestNo, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(CompanyId, requestUpdateStatusDto.CompanyID, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, requestUpdateStatusDto.EmployeeID, DbType.String, ParameterDirection.Input);
+            dbparams.Add(RequestStatus, requestUpdateStatusDto.RequestStatus, DbType.DateTime, ParameterDirection.Input);
+            int nResult = await Dapper.Update(_Update_Employee_Leave_Request_Status, dbparams, commandType: CommandType.StoredProcedure);
+            return nResult;
         }
     }
 }

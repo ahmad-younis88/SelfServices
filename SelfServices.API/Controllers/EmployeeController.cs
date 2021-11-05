@@ -97,5 +97,78 @@ namespace SelfServices.API.Controllers
             }
         }
 
+
+        [Authorize]
+        [HttpPost]
+        [Route("VacationRequest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AddEmployeeVacationRequest([FromBody] VacationRequestDto vacationRequestDto)
+        {
+            try
+            {
+                int nSuccess = await EmployeeService.AddEmployeeVacationRequest(vacationRequestDto);
+                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("LeaveRequest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AddEmployeeLeaveRequest([FromBody] LeaveRequestDto leaveRequestDto)
+        {
+            try
+            {
+                int nSuccess = await EmployeeService.AddEmployeeLeaveRequest(leaveRequestDto);
+                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("VacationRequest/UpdateStatus")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateVacactionRequestStatus([FromBody] RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            try
+            {
+                int nSuccess = await EmployeeService.UpdateVacactionRequestStatus(requestUpdateStatusDto);
+                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("LeaveRequest/UpdateStatus")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateLeaveRequestStatus([FromBody] RequestUpdateStatusDto requestUpdateStatusDto)
+        {
+            try
+            {
+                int nSuccess = await EmployeeService.UpdateLeaveRequestStatus(requestUpdateStatusDto);
+                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
