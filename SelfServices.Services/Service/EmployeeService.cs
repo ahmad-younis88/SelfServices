@@ -58,5 +58,10 @@ namespace SelfServices.Services.Service
             return await EmployeeRepositry.UpdateLeaveRequestStatus(requestUpdateStatusDto);
         }
 
+        public async Task<List<EmployeeRequestDto>> GetEmployeeRequest(EmployeeRequestFilter employeeRequestFilter)
+        {
+            List<EmployeeRequestDto> employeeRequests = await EmployeeRepositry.GetEmployeeRequest(employeeRequestFilter);
+            return employeeRequests;
+        }
     }
 }

@@ -170,5 +170,23 @@ namespace SelfServices.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("EmployeeRequests")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateLeaveRequestStatus([FromBody] EmployeeRequestFilter employeeRequestFilter)
+        {
+            try
+            {
+                List<EmployeeRequestDto> employeeRequests = await EmployeeService.GetEmployeeRequest(employeeRequestFilter);
+                return Ok(new { isSuccess = true, Message = "", data = employeeRequests });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }
