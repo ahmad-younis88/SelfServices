@@ -107,8 +107,8 @@ namespace SelfServices.API.Controllers
         {
             try
             {
-                int nSuccess = await EmployeeService.AddEmployeeVacationRequest(vacationRequestDto);
-                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+                int nResult = await EmployeeService.AddEmployeeVacationRequest(vacationRequestDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
             catch (Exception ex)
             {
@@ -125,8 +125,8 @@ namespace SelfServices.API.Controllers
         {
             try
             {
-                int nSuccess = await EmployeeService.AddEmployeeLeaveRequest(leaveRequestDto);
-                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+                int nResult = await EmployeeService.AddEmployeeLeaveRequest(leaveRequestDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
             catch (Exception ex)
             {
@@ -143,8 +143,8 @@ namespace SelfServices.API.Controllers
         {
             try
             {
-                int nSuccess = await EmployeeService.UpdateVacactionRequestStatus(requestUpdateStatusDto);
-                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+                int nResult = await EmployeeService.UpdateVacactionRequestStatus(requestUpdateStatusDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
             catch (Exception ex)
             {
@@ -161,8 +161,8 @@ namespace SelfServices.API.Controllers
         {
             try
             {
-                int nSuccess = await EmployeeService.UpdateLeaveRequestStatus(requestUpdateStatusDto);
-                return Ok(new { isSuccess = nSuccess, Message = "", data = "" });
+                int nResult = await EmployeeService.UpdateLeaveRequestStatus(requestUpdateStatusDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
             catch (Exception ex)
             {

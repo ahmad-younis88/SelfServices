@@ -8,7 +8,7 @@ namespace SelfServices.Common.Dto
     {
         public int RequestNo { get; set; }
         public int CompanyID { get; set; }
-        public int EmployeeID { get; set; }
+        public string EmployeeID { get; set; }
         public int RequestStatus { get; set; }
     }
 }
