@@ -28,5 +28,17 @@ namespace SelfServices.Services.Service
             EmployeeSalaryReportViewDto employeeSalaryViewDto = await EmployeeRepositry.GetEmployeeSalary(employeeSalaryFilter);
             return employeeSalaryViewDto;
         }
+
+        public async Task<List<EmployeeBalancesDto>> GetEmployeeBalances(EmployeeFilterDto employeeDto)
+        {
+            List<EmployeeBalancesDto> employeeBalances = await EmployeeRepositry.GetEmployeeBalances(employeeDto);
+            return employeeBalances;
+        }
+
+        public async Task<List<LeaveType>> GetLeaveRequestType(EmployeeFilterDto employeeDto)
+        {
+            List<LeaveType> leaveTypes = await EmployeeRepositry.GetLeaveRequestType(employeeDto);
+            return leaveTypes;
+        }
     }
 }

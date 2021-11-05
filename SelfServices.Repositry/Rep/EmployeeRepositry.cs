@@ -18,6 +18,8 @@ namespace SelfServices.Repositry.Rep
 
         private const string _Get_Employee_By_Id = "GET_EMPLOYEES_BY_ID";
         private const string _Get_Employee_Salary_By_Emp_Id = "GET_EMPLOYEES_SALARY_BY_EMP_ID";
+        private const string _Get_Employees_Balances_By_Emp_Id = "GET_EMPLOYEES_BALANCES_BY_EMP_ID";
+        private const string _Get_Employees_Leave_Type = "GET_EMPLOYEES_LEAVE_TYPE";
 
         #endregion
 
@@ -54,6 +56,24 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(YearID, employeeSalaryFilter.YearId, DbType.Int32, ParameterDirection.Input);
             EmployeeSalaryReportViewDto employeeSalary = await Dapper.Get<EmployeeSalaryReportViewDto>(_Get_Employee_Salary_By_Emp_Id, dbparams, commandType: CommandType.StoredProcedure);
             return employeeSalary;
+        }
+
+        public async Task<List<EmployeeBalancesDto>> GetEmployeeBalances(EmployeeFilterDto employeeDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(CompanyId, employeeDto.CompanyId, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, employeeDto.EmployeeId, DbType.String, ParameterDirection.Input);
+            List<EmployeeBalancesDto> employeeBalances = await Dapper.GetAll<EmployeeBalancesDto>(_Get_Employees_Balances_By_Emp_Id, dbparams, commandType: CommandType.StoredProcedure);
+            return employeeBalances;
+        }
+
+        public async Task<List<LeaveType>> GetLeaveRequestType(EmployeeFilterDto employeeDto)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add(CompanyId, employeeDto.CompanyId, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(EmployeeId, employeeDto.EmployeeId, DbType.String, ParameterDirection.Input);
+            List<LeaveType> leaveTypes = await Dapper.GetAll<LeaveType>(_Get_Employees_Leave_Type, dbparams, commandType: CommandType.StoredProcedure);
+            return leaveTypes;
         }
     }
 }

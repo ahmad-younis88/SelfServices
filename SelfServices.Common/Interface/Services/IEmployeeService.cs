@@ -11,5 +11,7 @@ namespace SelfServices.Common.Interface.Services
     {
         Task<EmployeeViewDto> GetEmployee(EmployeeFilterDto employeeDto);
         Task<EmployeeSalaryReportViewDto> GetEmployeeSalary(EmployeeSalaryFilterDto employeeSalaryFilter);
+        Task<List<EmployeeBalancesDto>> GetEmployeeBalances(EmployeeFilterDto employeeDto);
+        Task<List<LeaveType>> GetLeaveRequestType(EmployeeFilterDto employeeDto);
     }
 }
