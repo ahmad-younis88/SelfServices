@@ -11,6 +11,7 @@ namespace SelfServices.Common.Dto
         public int RequestNumber { get; set; }
         public int RequestStatus { get; set; }
         public DateTime RequestDate { get; set; }
+        public string EmployeeID { get; set; }
         public string Note { get; set; }
         public int TypeID { get; set; }
         public string TypeNameA { get; set; }
