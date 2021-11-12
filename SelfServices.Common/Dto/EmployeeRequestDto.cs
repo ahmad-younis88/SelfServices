@@ -15,5 +15,6 @@ namespace SelfServices.Common.Dto
         public int TypeID { get; set; }
         public string TypeNameA { get; set; }
         public string TypeNameE { get; set; }
+        public int IsVacationType { get; set; }
     }
 }
