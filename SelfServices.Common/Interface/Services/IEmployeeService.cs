@@ -18,5 +18,6 @@ namespace SelfServices.Common.Interface.Services
         Task<int> UpdateVacactionRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto);
         Task<int> UpdateLeaveRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto);
         Task<List<EmployeeRequestDto>> GetEmployeeRequest(EmployeeRequestFilter employeeRequestFilter);
+        Task<List<EmployeeRequestDto>> GetRequestsByDirectManagerId(EmployeeRequestFilter employeeRequestFilter);
     }
 }

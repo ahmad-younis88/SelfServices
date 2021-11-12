@@ -29,7 +29,6 @@ namespace SelfServices.Common.Entity
         public byte[] ImageName { get; set; }
 
         public bool IsActive { get; set; }
-
         public DateTime TimeStamp { get; set; }
         public bool IsManager { get; set; }
 
