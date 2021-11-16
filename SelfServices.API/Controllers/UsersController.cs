@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SelfServices.API.Generic;
@@ -46,6 +47,43 @@ namespace SelfServices.API.Controllers
 
                 string jwtToken = TokenServices.GenerateToken(userInfo);
                 return Ok(new { isSuccess = true, Message = "", token = jwtToken , data = essUser });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        [Route("changePassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChangePassword([FromBody] EmployeeChangePasswordDto employeeChangePasswordDto)
+        {
+            try
+            {
+                int nResult = await EssUserService.ChangeEssUserPassword(employeeChangePasswordDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("updateProfile")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProfile([FromBody] EmployeeUpdateProfileDto employeeUpdateProfileDto)
+        {
+            try
+            {
+                int nResult = await EssUserService.UpdateEssUserProfile(employeeUpdateProfileDto);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
             catch (Exception ex)
             {

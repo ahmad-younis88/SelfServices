@@ -17,10 +17,21 @@ namespace SelfServices.Services.Service
             EssUserRepositry = essUserRepositry;
         }
 
+      
         public async Task<EssUser> GetEssUser(UserInfo userInfo)
         {
             EssUser essUser = await EssUserRepositry.GetEssUser(userInfo);
             return essUser;
+        }
+
+        public async Task<int> ChangeEssUserPassword(EmployeeChangePasswordDto employeeChangePasswordDto)
+        {
+            return await EssUserRepositry.ChangeEssUserPassword(employeeChangePasswordDto);
+        }
+
+        public async Task<int> UpdateEssUserProfile(EmployeeUpdateProfileDto employeeUpdateProfileDto)
+        {
+            return await EssUserRepositry.UpdateEssUserProfile(employeeUpdateProfileDto);
         }
     }
 }

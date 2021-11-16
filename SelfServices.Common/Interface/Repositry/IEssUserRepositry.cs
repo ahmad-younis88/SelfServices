@@ -10,5 +10,7 @@ namespace SelfServices.Common.Interface.Repositry
     public interface IEssUserRepositry
     {
         Task<EssUser> GetEssUser(UserInfo userInfo);
+        Task<int> ChangeEssUserPassword(EmployeeChangePasswordDto employeeChangePasswordDto);
+        Task<int> UpdateEssUserProfile(EmployeeUpdateProfileDto employeeUpdateProfileDto);
     }
 }
