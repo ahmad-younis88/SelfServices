@@ -45,6 +45,8 @@ namespace SelfServices.Repositry.Rep
         private const string FromTime = "@FromTime";
         private const string ToTime = "@ToTime";
         private const string Note = "@Note";
+        private const string FromNumOfRecord = "@FromNumOfRecord";
+        private const string ToNumOfRecord = "@ToNumOfRecord";
 
 
 
@@ -151,6 +153,8 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(FromDate, employeeRequestFilter.FromDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(ToDate, employeeRequestFilter.ToDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(Note, employeeRequestFilter.Note, DbType.String, ParameterDirection.Input);
+            dbparams.Add(FromNumOfRecord, employeeRequestFilter.FromNumOfRecord, DbType.Int32, ParameterDirection.Input);
+            dbparams.Add(ToNumOfRecord, employeeRequestFilter.ToNumOfRecord, DbType.Int32, ParameterDirection.Input);
             List<EmployeeRequestDto> employeeRequests = await Dapper.GetAll<EmployeeRequestDto>(_Get_All_Employee_Request_By_Emp_Id, dbparams, commandType: CommandType.StoredProcedure);
             return employeeRequests;
         }
