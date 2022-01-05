@@ -35,36 +35,8 @@ namespace SelfServices.API.Controllers
         {
             try
             {
-                // check if user has correct creditional
-                // Users user = await UserService.CheckUser(userInfo.UserName, userInfo.Password);
-                /*if (userInfo != null)
-                {*/
-
-                /*var jwtTokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Secret"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim("Username", userInfo.UserName),
-                        new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddHours(6),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-                var jwtToken = jwtTokenHandler.WriteToken(token);*/
-
                 string jwtToken = TokenServices.GenerateToken(userInfo);
                 return Ok(new { token = jwtToken });
-
-                /*}
-                else
-                {
-                    return Unauthorized(new { message = "" });
-                }*/
             }
             catch (Exception ex)
             {
@@ -93,5 +65,6 @@ namespace SelfServices.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
     }
 }

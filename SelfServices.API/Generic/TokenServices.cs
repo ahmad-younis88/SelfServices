@@ -75,7 +75,7 @@ namespace SelfServices.API.Generic
                     isValid = true;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 isValid = false;
             }

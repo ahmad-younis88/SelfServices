@@ -12,8 +12,6 @@ namespace SelfServices.Common.Dto
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string Note { get; set; }
-        public int FromNumOfRecord { get; set; }
-        public int ToNumOfRecord { get; set; }
-
+        public int PageIndex { get; set; }
     }
 }

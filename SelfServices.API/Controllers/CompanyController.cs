@@ -17,9 +17,11 @@ namespace SelfServices.API.Controllers
     public class CompanyController : ControllerBase
     {
         private ICompanyService CompanyService;
-        public CompanyController(ICompanyService companyService)
+        private ISettingService SettingService;
+        public CompanyController(ICompanyService companyService, ISettingService settingService)
         {
             CompanyService = companyService;
+            SettingService = settingService;
         }
 
         [HttpGet]
@@ -28,6 +30,22 @@ namespace SelfServices.API.Controllers
         {
             List<Company> companies = await CompanyService.GetCompany();
             return companies.ToList();
+        }
+
+        [HttpGet]
+        [Route("getSetting")]
+        public async Task<IActionResult> GetSetting(int CompanyId)
+        {
+            try
+            {
+                SelfServiceSetting setting = await SettingService.GetSetting(CompanyId);
+                return Ok(new { isSuccess = true, Message = "", data = setting });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+           
         }
     }
 }

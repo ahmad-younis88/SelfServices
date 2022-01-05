@@ -26,6 +26,33 @@ namespace SelfServices.API.Controllers
             EssUserService = essUserService;
         }
 
+        [HttpPost]
+        [Route("refershToken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> refershToken([FromBody] UserInfo userInfo)
+        {
+            try
+            {
+                #region :: Validate Employee Of User Is Exist Or Not
+
+                EssUser essUser = await EssUserService.GetEssUser(userInfo);
+                if (essUser == null)
+                {
+                    return Ok(new { isSuccess = false, Message = "User Name Or Password Not Exists Please Try Again",data = "" });
+                }
+
+                #endregion
+
+                string jwtToken = TokenServices.GenerateToken(userInfo);
+                return Ok(new { isSuccess = true, Message = "", token = jwtToken, data = essUser });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
         [HttpPost]
         [Route("login")]
@@ -65,7 +92,7 @@ namespace SelfServices.API.Controllers
             try
             {
                 int nResult = await EssUserService.ChangeEssUserPassword(employeeChangePasswordDto);
-                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "success_change_password", data = "" });
             }
             catch (Exception ex)
             {
@@ -83,7 +110,7 @@ namespace SelfServices.API.Controllers
             try
             {
                 int nResult = await EssUserService.UpdateEssUserProfile(employeeUpdateProfileDto);
-                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "success_update_profile", data = "" });
             }
             catch (Exception ex)
             {

@@ -22,7 +22,7 @@ namespace SelfServices.Repositry
             services.AddScoped<ICompanyRepositry, CompanyRepositry>();
             services.AddScoped<IEssUserRepositry, EssUserRepositry>();
             services.AddScoped<IEmployeeRepositry, EmployeeRepositry>();
-
+            services.AddScoped<ISettingRepositry, SettingRepositry>();
             return services;
         }
     }
