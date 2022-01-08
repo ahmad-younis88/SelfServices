@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SelfServices.API.Config;
-using SelfServices.API.Generic;
+using SelfServices.API.GenericServices;
 using SelfServices.API.Middleware;
 using SelfServices.Services;
 using System;

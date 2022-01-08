@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SelfServices.API.Generic;
+using SelfServices.API.GenericServices;
 using SelfServices.Common.Dto;
 using SelfServices.Common.Entity;
 using SelfServices.Common.Interface.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,11 +21,13 @@ namespace SelfServices.API.Controllers
     {
         private TokenServices TokenServices;
         private IEmployeeService EmployeeService;
+        private readonly IHostingEnvironment _hostingEnv;
 
-        public EmployeeController(TokenServices tokenServices, IEmployeeService employeeService)
+        public EmployeeController(TokenServices tokenServices, IEmployeeService employeeService, IHostingEnvironment hostingEnv)
         {
             TokenServices = tokenServices;
             EmployeeService = employeeService;
+            _hostingEnv = hostingEnv;
         }
 
 
@@ -103,10 +107,24 @@ namespace SelfServices.API.Controllers
         [Route("VacationRequest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddEmployeeVacationRequest([FromBody] VacationRequestDto vacationRequestDto)
+        public async Task<IActionResult> AddEmployeeVacationRequest([FromBody] VacationRequestDto vacationRequestDto, IFormFile file)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(_hostingEnv.WebRootPath))
+                {
+                    _hostingEnv.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
+
+                using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileSteam);
+                }
+
+                vacationRequestDto.FilePath = Path.Combine("files", fileName);
+
                 int nResult = await EmployeeService.AddEmployeeVacationRequest(vacationRequestDto);
                 return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }
@@ -121,10 +139,24 @@ namespace SelfServices.API.Controllers
         [Route("LeaveRequest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddEmployeeLeaveRequest([FromBody] LeaveRequestDto leaveRequestDto)
+        public async Task<IActionResult> AddEmployeeLeaveRequest([FromBody] LeaveRequestDto leaveRequestDto, IFormFile file)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(_hostingEnv.WebRootPath))
+                {
+                    _hostingEnv.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                }
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
+
+                using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileSteam);
+                }
+
+                leaveRequestDto.FilePath = Path.Combine("files", fileName);
+
                 int nResult = await EmployeeService.AddEmployeeLeaveRequest(leaveRequestDto);
                 return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
             }

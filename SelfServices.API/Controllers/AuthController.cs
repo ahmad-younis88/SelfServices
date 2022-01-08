@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using SelfServices.API.Generic;
+using SelfServices.API.GenericServices;
 
 namespace SelfServices.API.Controllers
 {
@@ -61,6 +61,42 @@ namespace SelfServices.API.Controllers
                 return Ok(new { isValid = IsValidTokenByUser.ToString() });
             }
             catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        [Route("refershToken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> RefershToken([FromBody] UserInfo userInfo)
+        {
+            try
+            {
+                string NewToken = "";
+
+                // check if token is expire or not
+                if (!Request.Headers.Keys.Contains("Authorization"))
+                {
+                    return BadRequest(new { message = "old Token not exists" });
+                }
+
+                userInfo.Token = Request.Headers["Authorization"].ToString().Replace("Bearer", "").Trim();
+
+                bool IsValidTokenByUser = TokenServices.ValidateToken(userInfo);
+                if (!IsValidTokenByUser)
+                {
+                    NewToken = TokenServices.GenerateToken(userInfo);
+                    userInfo.Token = NewToken;
+                    return Ok(new { isSuccess = true, Message = "success", data = userInfo });
+                }
+
+                return BadRequest(new { isSuccess = false, Message = "not_expire" });
+
+            }
+            catch(Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }

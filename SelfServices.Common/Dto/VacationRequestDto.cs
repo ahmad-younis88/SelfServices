@@ -13,5 +13,6 @@ namespace SelfServices.Common.Dto
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string Note { get; set; }
+        public string FilePath { get; set; }
     }
 }

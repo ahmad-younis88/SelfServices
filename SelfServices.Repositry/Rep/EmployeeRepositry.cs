@@ -45,6 +45,7 @@ namespace SelfServices.Repositry.Rep
         private const string FromTime = "@FromTime";
         private const string ToTime = "@ToTime";
         private const string Note = "@Note";
+        private const string FilePath = "@FilePath";
         private const string PageIndex = "@PageIndex";
 
 
@@ -106,6 +107,7 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(FromDate, vacationRequestDto.FromDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(ToDate, vacationRequestDto.ToDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(Note, vacationRequestDto.Note, DbType.String, ParameterDirection.Input);
+            dbparams.Add(FilePath, vacationRequestDto.FilePath, DbType.String, ParameterDirection.Input);
             int nResult = await Dapper.Insert(_Add_Employee_Vacation_Request, dbparams, commandType: CommandType.StoredProcedure);
             return nResult;
         }
@@ -119,6 +121,7 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(FromTime, leaveRequestDto.FromTime, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(ToTime, leaveRequestDto.ToTime, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(Note, leaveRequestDto.Note, DbType.String, ParameterDirection.Input);
+            dbparams.Add(FilePath, leaveRequestDto.FilePath, DbType.String, ParameterDirection.Input);
             int nResult = await Dapper.Insert(_Add_Employee_Leave_Request, dbparams, commandType: CommandType.StoredProcedure);
             return nResult;
         }

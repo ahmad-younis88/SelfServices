@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SelfServices.API.Generic
+namespace SelfServices.API.GenericServices
 {
     public class TokenServices
     {
@@ -34,7 +34,7 @@ namespace SelfServices.API.Generic
                             new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
-                    Expires = DateTime.UtcNow.AddHours(6),
+                    Expires = DateTime.UtcNow.AddSeconds(int.Parse(Configuration["JwtConfig:ExpireTime"])),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
