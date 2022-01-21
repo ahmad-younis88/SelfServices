@@ -19,6 +19,7 @@ namespace SelfServices.Services
             services.AddScoped<IEssUserService, EssUserService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ISettingService, SettingService>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddRepositry(configuration);
             return services;
         }

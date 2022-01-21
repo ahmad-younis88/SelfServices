@@ -23,6 +23,7 @@ namespace SelfServices.Repositry
             services.AddScoped<IEssUserRepositry, EssUserRepositry>();
             services.AddScoped<IEmployeeRepositry, EmployeeRepositry>();
             services.AddScoped<ISettingRepositry, SettingRepositry>();
+            services.AddScoped<INotificationRepositry, NotificationRepositry>();
             return services;
         }
     }
