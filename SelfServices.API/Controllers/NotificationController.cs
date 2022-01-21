@@ -22,36 +22,73 @@ namespace SelfServices.API.Controllers
 
         [HttpGet]
         [Route("all-notification/{UserNo}")]
-        public async Task<List<Notification>> GetNotifications(long UserNo)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetNotifications(long UserNo)
         {
-            List<Notification> Notifications = await NotificationService.GetNotifications(UserNo);
-            return Notifications;
+            try
+            {
+                List<Notification> Notifications = await NotificationService.GetNotifications(UserNo);
+                return Ok(new { isSuccess = true, Message = "", data = Notifications });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
 
         [HttpGet]
         [Route("notification-by-id/{Id}")]
-        public async Task<Notification> GetNotificationById(int Id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetNotificationById(int Id)
         {
-            Notification notification = await NotificationService.GetNotificationById(Id);
-            return notification;
+            try
+            {
+                Notification notification = await NotificationService.GetNotificationById(Id);
+                return Ok(new { isSuccess = true, Message = "", data = notification });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Authorize]
         [HttpPost]
         [Route("update")]
-        public async Task<int> UpdateNotification(Notification notification)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateNotification(Notification notification)
         {
-            int nResult = await NotificationService.UpdateNotification(notification);
-            return nResult;
+            try
+            {
+                int nResult = await NotificationService.UpdateNotification(notification);
+                return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Authorize]
         [HttpGet]
         [Route("number-of-notification/UserNo/{UserNo}")]
-        public async Task<int> GetNumberOfNotification(long UserNo)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetNumberOfNotification(long UserNo)
         {
-            int nNumberOfnotifications = await NotificationService.GetNumberOfNotification(UserNo);
-            return nNumberOfnotifications;
+            try
+            {
+                int nNumberOfnotifications = await NotificationService.GetNumberOfNotification(UserNo);
+                return Ok(new { isSuccess = nNumberOfnotifications > 0 ? true : false, Message = "", data = "" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
