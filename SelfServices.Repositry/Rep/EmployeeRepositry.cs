@@ -166,6 +166,7 @@ namespace SelfServices.Repositry.Rep
             dbparams.Add(FromDate, employeeRequestFilter.FromDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(ToDate, employeeRequestFilter.ToDate, DbType.DateTime, ParameterDirection.Input);
             dbparams.Add(Note, employeeRequestFilter.Note, DbType.String, ParameterDirection.Input);
+            dbparams.Add(PageIndex, employeeRequestFilter.PageIndex, DbType.Int32, ParameterDirection.Input);
             List<EmployeeRequestDto> employeeRequests = await Dapper.GetAll<EmployeeRequestDto>(_Get_All_Request_By_Direct_Mang_Id, dbparams, commandType: CommandType.StoredProcedure);
             return employeeRequests;
         }

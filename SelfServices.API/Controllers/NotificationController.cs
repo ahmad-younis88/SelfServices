@@ -83,7 +83,7 @@ namespace SelfServices.API.Controllers
             try
             {
                 int nNumberOfnotifications = await NotificationService.GetNumberOfNotification(UserNo);
-                return Ok(new { isSuccess = nNumberOfnotifications > 0 ? true : false, Message = "", data = "" });
+                return Ok(new { isSuccess = true , Message = "", data = nNumberOfnotifications });
             }
             catch (Exception ex)
             {
