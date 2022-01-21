@@ -19,5 +19,7 @@ namespace SelfServices.Common.Interface.Repositry
         Task<int> UpdateLeaveRequestStatus(RequestUpdateStatusDto requestUpdateStatusDto);
         Task<List<EmployeeRequestDto>> GetEmployeeRequest(EmployeeRequestFilter employeeRequestFilter);
         Task<List<EmployeeRequestDto>> GetRequestsByDirectManagerId(EmployeeRequestFilter employeeRequestFilter);
+        Task<EmployeeRequestDto> GetLeaveRequestDetail(int requestId);
+        Task<EmployeeRequestDto> GetVacationRequestDetail(int requestId);
     }
 }

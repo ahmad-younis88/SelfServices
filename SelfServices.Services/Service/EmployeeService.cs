@@ -69,5 +69,15 @@ namespace SelfServices.Services.Service
             List<EmployeeRequestDto> employeeRequests = await EmployeeRepositry.GetRequestsByDirectManagerId(employeeRequestFilter);
             return employeeRequests;
         }
+
+        public async Task<EmployeeRequestDto> GetLeaveRequestDetail(int requestId)
+        {
+            return await EmployeeRepositry.GetLeaveRequestDetail(requestId);
+        }
+
+        public async Task<EmployeeRequestDto> GetVacationRequestDetail(int requestId)
+        {
+            return await EmployeeRepositry.GetVacationRequestDetail(requestId);
+        }
     }
 }

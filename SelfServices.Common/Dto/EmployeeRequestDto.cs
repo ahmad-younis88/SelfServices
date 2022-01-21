@@ -17,5 +17,6 @@ namespace SelfServices.Common.Dto
         public string TypeNameA { get; set; }
         public string TypeNameE { get; set; }
         public int IsVacationType { get; set; }
+        public string FilePath { get; set; }
     }
 }

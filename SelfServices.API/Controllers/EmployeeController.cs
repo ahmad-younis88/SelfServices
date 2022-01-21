@@ -107,7 +107,7 @@ namespace SelfServices.API.Controllers
         [Route("VacationRequest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddEmployeeVacationRequest([FromBody] VacationRequestDto vacationRequestDto, IFormFile file)
+        public async Task<IActionResult> AddEmployeeVacationRequest([FromForm] VacationRequestDto vacationRequestDto, IFormFile file)
         {
             try
             {
@@ -115,15 +115,19 @@ namespace SelfServices.API.Controllers
                 {
                     _hostingEnv.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
-                var fileName = Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
 
-                using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                if (file != null)
                 {
-                    await file.CopyToAsync(fileSteam);
-                }
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
 
-                vacationRequestDto.FilePath = Path.Combine("files", fileName);
+                    using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileSteam);
+                    }
+
+                    vacationRequestDto.FilePath = Path.Combine("files", fileName);
+                }
 
                 int nResult = await EmployeeService.AddEmployeeVacationRequest(vacationRequestDto);
                 return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
@@ -139,7 +143,7 @@ namespace SelfServices.API.Controllers
         [Route("LeaveRequest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddEmployeeLeaveRequest([FromBody] LeaveRequestDto leaveRequestDto, IFormFile file)
+        public async Task<IActionResult> AddEmployeeLeaveRequest([FromForm] LeaveRequestDto leaveRequestDto, IFormFile file)
         {
             try
             {
@@ -147,15 +151,19 @@ namespace SelfServices.API.Controllers
                 {
                     _hostingEnv.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
-                var fileName = Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
 
-                using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                if (file != null)
                 {
-                    await file.CopyToAsync(fileSteam);
-                }
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(_hostingEnv.WebRootPath, "files", fileName);
 
-                leaveRequestDto.FilePath = Path.Combine("files", fileName);
+                    using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileSteam);
+                    }
+
+                    leaveRequestDto.FilePath = Path.Combine("files", fileName);
+                }
 
                 int nResult = await EmployeeService.AddEmployeeLeaveRequest(leaveRequestDto);
                 return Ok(new { isSuccess = nResult > 0 ? true : false, Message = "", data = "" });
@@ -231,6 +239,40 @@ namespace SelfServices.API.Controllers
             {
                 List<EmployeeRequestDto> employeeRequests = await EmployeeService.GetRequestsByDirectManagerId(employeeRequestFilter);
                 return Ok(new { isSuccess = true, Message = "", data = employeeRequests });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("GetVacationRequestDetails")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetVacationRequestDetails(int requestId)
+        {
+            try
+            {
+                EmployeeRequestDto employee = await EmployeeService.GetVacationRequestDetail(requestId);
+                return Ok(new { isSuccess = true, Message = "", data = employee });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("GetLeaveRequestDetails")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLeaveRequestDetails(int requestId)
+        {
+            try
+            {
+                EmployeeRequestDto employee = await EmployeeService.GetLeaveRequestDetail(requestId);
+                return Ok(new { isSuccess = true, Message = "", data = employee });
             }
             catch (Exception ex)
             {
